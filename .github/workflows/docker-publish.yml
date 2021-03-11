@@ -47,13 +47,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Build image
         shell: pwsh
         run: docker build . --file Dockerfile --tag ${env:IMAGE_NAME}.ToLower()
-
-      - name: Log into registry
-        shell: pwsh
-        run: docker login docker.pkg.github.com -u "${env:github.actor}" -p "${env:secrets.GITHUB_TOKEN}"
 
       - name: Push image
         shell: pwsh
