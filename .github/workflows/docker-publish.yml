@@ -49,7 +49,7 @@ jobs:
 
       - name: Build image
         shell: pwsh
-        run: docker build . --file Dockerfile --tag ${env:IMAGE_NAME}
+        run: docker build . --file Dockerfile --tag ${env:IMAGE_NAME}.ToLower()
 
       - name: Log into registry
         shell: pwsh
