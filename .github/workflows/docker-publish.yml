@@ -53,7 +53,7 @@ jobs:
 
       - name: Log into registry
         shell: pwsh
-        run: echo "${env:secrets.GITHUB_TOKEN}" | docker login docker.pkg.github.com -u ${env:github.actor} --password-stdin
+        run: docker login docker.pkg.github.com -u "${env:github.actor}" -p "${env:secrets.GITHUB_TOKEN}"
 
       - name: Push image
         shell: pwsh
