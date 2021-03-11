@@ -47,12 +47,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@v1
-        with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login
+        shell: pwsh
+        run: echo ${env:secrets.GITHUB_TOKEN} | docker login https://docker.pkg.github.com -u ${env:GITHUB_ACTOR} --password-stdin
           
       - name: Build image
         shell: pwsh
