@@ -49,7 +49,9 @@ jobs:
 
       - name: Login
         shell: pwsh
-        run: echo ${env:secrets.GITHUB_TOKEN} | docker login https://docker.pkg.github.com -u ${env:GITHUB_ACTOR} --password-stdin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo $env:GITHUB_TOKEN | docker login https://docker.pkg.github.com -u ${env:GITHUB_ACTOR} --password-stdin
           
       - name: Build image
         shell: pwsh
