@@ -27,7 +27,7 @@ jobs:
       - name: Run tests
         shell: pwsh
         run: |
-          if(Test-File docker-compose.test.yml){
+          if(Test-Path docker-compose.test.yml){
             docker-compose --file docker-compose.test.yml build
             docker-compose --file docker-compose.test.yml run sut
           }
