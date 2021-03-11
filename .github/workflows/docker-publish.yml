@@ -25,13 +25,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
+        shell: pwsh
         run: |
-          if [ -f docker-compose.test.yml ]; then
+          if(Test-File docker-compose.test.yml){
             docker-compose --file docker-compose.test.yml build
             docker-compose --file docker-compose.test.yml run sut
-          else
+          }
+          else{
             docker build . --file Dockerfile
-          fi
+          }
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
@@ -52,17 +54,18 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: Push image
+        shell: pwsh
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
-
+          $IMAGE_ID=docker.pkg.github.com/${env:github.repository}/${env:IMAGE_NAME}
           # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          $IMAGE_ID=$IMAGE_ID.ToLower()
 
           # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          $VERSION="${env:github.ref}"
+          
 
           # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
           # Use Docker `latest` tag convention
           [ "$VERSION" == "main" ] && VERSION=latest
