@@ -65,11 +65,14 @@ jobs:
           $IMAGE_ID=$IMAGE_ID.ToLower()
 
           # Strip git ref prefix from version
-          $VERSION="${env:github.ref}"
+          $VERSION="${env:GITHUB_REF}"
           
-
           # Strip "v" prefix from tag name
           # [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          
+          if ($Version -match 'refs/tags/v(.*)') {
+            $Version = $matches[1]
+          }
 
           # Use Docker `latest` tag convention
           if($VERSION -eq "main" ){
