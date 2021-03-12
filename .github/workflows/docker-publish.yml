@@ -60,7 +60,7 @@ jobs:
       - name: Push image
         shell: pwsh
         run: |
-          $IMAGE_ID=docker.pkg.github.com/${env:github.repository}/${env:IMAGE_NAME}
+          $IMAGE_ID="docker.pkg.github.com/${env:github.repository}/${env:IMAGE_NAME}"
           # Change all uppercase to lowercase
           $IMAGE_ID=$IMAGE_ID.ToLower()
 
