@@ -75,12 +75,12 @@ jobs:
           }
 
           # Use Docker `latest` tag convention
-          if($VERSION -eq "main" ){
+          if($VERSION -eq "/refs/head/main" ){
             $VERSION="latest"
           }
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          #docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          #docker push $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
