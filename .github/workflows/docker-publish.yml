@@ -76,7 +76,7 @@ jobs:
           }
 
           # Use Docker `latest` tag convention
-          if($VERSION -eq "/refs/head/main" ){
+          if($VERSION -eq "/refs/heads/main" ){
             $VERSION="latest"
           }
 
