@@ -61,7 +61,7 @@ jobs:
         shell: pwsh
         run: |
           $ImageName = ${env:IMAGE_NAME}.ToLower()
-          $IMAGE_ID="docker.pkg.github.com/${env:github.repository}/$ImageName"
+          $IMAGE_ID="docker.pkg.github.com/${env:GITHUB_REPOSITORY}/$ImageName"
           # Change all uppercase to lowercase
           $IMAGE_ID=$IMAGE_ID.ToLower()
 
