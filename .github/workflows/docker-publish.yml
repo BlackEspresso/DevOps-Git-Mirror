@@ -60,7 +60,8 @@ jobs:
       - name: Push image
         shell: pwsh
         run: |
-          $IMAGE_ID="docker.pkg.github.com/${env:github.repository}/${env:IMAGE_NAME}"
+          $ImageName = ${env:IMAGE_NAME}.ToLower()
+          $IMAGE_ID="docker.pkg.github.com/${env:github.repository}/$ImageName"
           # Change all uppercase to lowercase
           $IMAGE_ID=$IMAGE_ID.ToLower()
 
@@ -82,5 +83,5 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker tag $env:IMAGE_NAME ${IMAGE_ID}:${VERSION}
+          docker tag $ImageName ${IMAGE_ID}:${VERSION}
           docker push ${IMAGE_ID}:${VERSION}
