@@ -15,6 +15,7 @@ on:
 
 env:
   IMAGE_NAME: DevOpsGitMirror
+  Hub: hub.docker.com
 
 jobs:
   # Run tests.
@@ -51,7 +52,7 @@ jobs:
         shell: pwsh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo $env:GITHUB_TOKEN | docker login https://docker.pkg.github.com -u ${env:GITHUB_ACTOR} --password-stdin
+        run: echo $env:DOCKERHUBTOKEN | docker $env:Hub login -u ${env:GITHUB_ACTOR} --password-stdin
           
       - name: Build image
         shell: pwsh
@@ -61,7 +62,7 @@ jobs:
         shell: pwsh
         run: |
           $ImageName = ${env:IMAGE_NAME}.ToLower()
-          $IMAGE_ID="docker.pkg.github.com/${env:GITHUB_REPOSITORY}/$ImageName"
+          $IMAGE_ID="$hub/${env:GITHUB_REPOSITORY}/$ImageName"
           # Change all uppercase to lowercase
           $IMAGE_ID=$IMAGE_ID.ToLower()
 
