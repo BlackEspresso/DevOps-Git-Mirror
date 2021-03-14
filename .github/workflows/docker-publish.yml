@@ -53,7 +53,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOCKERHUBTOKEN: ${{ secrets.DOCKERHUBTOKEN }}
-        run: echo $env:DOCKERHUBTOKEN | docker login -u "blackespresso" --password-stdin
+        run: echo $env:DOCKERHUBTOKEN | docker login -u "$(${env:GITHUB_ACTOR}.ToLower())" --password-stdin
           
       - name: Build image
         shell: pwsh
@@ -63,7 +63,7 @@ jobs:
         shell: pwsh
         run: |
           $ImageName = ${env:IMAGE_NAME}.ToLower()
-          $IMAGE_ID="$env:hub/$ImageName"
+          $IMAGE_ID="$(${env:GITHUB_ACTOR}.ToLower())/$ImageName"
           # Change all uppercase to lowercase
           $IMAGE_ID=$IMAGE_ID.ToLower()
 
