@@ -52,7 +52,7 @@ jobs:
         shell: pwsh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo $env:DOCKERHUBTOKEN | docker $env:Hub login -u ${env:GITHUB_ACTOR} --password-stdin
+        run: echo $env:DOCKERHUBTOKEN | docker login $env:Hub -u ${env:GITHUB_ACTOR} --password-stdin
           
       - name: Build image
         shell: pwsh
